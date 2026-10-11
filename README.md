@@ -53,6 +53,9 @@ dotnet run -c Release
 1. `%LOCALAPPDATA%\cmjLimit\cmjLimit.ini`（当前用户私有）
 2. `C:\ProgramData\cmjLimit\cmjLimit.ini`（全机共享 / 集中管理）
 
+仓库根目录自带一份可直接使用的示例 [`cmjLimit.ini`](./cmjLimit.ini)（默认限制 `guest` 用户每天 1 小时），
+把它复制到上述任一路径即可生效。
+
 默认内容如下（以 `;` 或 `#` 开头为注释）：
 
 ```ini

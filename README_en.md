@@ -58,6 +58,9 @@ On first run the program auto-creates a config file (in priority order):
 1. `%LOCALAPPDATA%\cmjLimit\cmjLimit.ini` (per-user)
 2. `C:\ProgramData\cmjLimit\cmjLimit.ini` (machine-wide / central)
 
+The repository root ships a ready-to-use sample [`cmjLimit.ini`](./cmjLimit.ini) (limits the `guest`
+account to 1 hour per day by default). Copy it to either of the paths above to use it.
+
 Default content (`;` or `#` starts a comment):
 
 ```ini
