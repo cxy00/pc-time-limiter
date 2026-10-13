@@ -25,15 +25,16 @@ namespace CmjLimit
             }
         }
 
-        public NoticeForm(string message, Color backColor, int autoCloseSeconds)
+        public NoticeForm(string message, Color backColor, int autoCloseSeconds,
+            int width = 440, int height = 160, double opacity = 0.65)
         {
             FormBorderStyle = FormBorderStyle.None;
             StartPosition = FormStartPosition.Manual;
             TopMost = true;
             ShowInTaskbar = false;
             BackColor = backColor;
-            Size = new Size(440, 160);
-            Opacity = 0.95;
+            Size = new Size(width, height);
+            Opacity = opacity;
 
             _label = new Label
             {

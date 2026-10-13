@@ -124,9 +124,13 @@ namespace CmjLimit
                     Log($"启动监控：配置={_ini.FilePath}，账户={Environment.UserName}，" +
                         $"每日上限={_limitSeconds / 60} 分钟，今日已用={_state.UsedSeconds / 60} 分钟。");
 
-                    // 当天额度已用完（说明是“再次登录”）-> 进入宽限期
-                    if (_state.UsedSeconds >= _config.LimitSeconds)
-                        StartGrace();
+                    // 再次登录（当日已用过时间）：保证本次剩余可用时间不低于 ReloginGraceMinutes
+                    if (_state.UsedSeconds > 0)
+                    {
+                        int remaining = _limitSeconds - _state.UsedSeconds;
+                        if (remaining < _config.GraceSeconds)
+                            _limitSeconds = _state.UsedSeconds + _config.GraceSeconds;
+                    }
                 }
                 else
                 {
@@ -449,8 +453,10 @@ namespace CmjLimit
         private static void ShowWarn(int remainSeconds)
         {
             int min = (remainSeconds + 59) / 60;
-            _warnNotice = new NoticeForm($"今天还能用 {min} 分钟，\r\n时间到后会自动注销，请提前保存。",
-                Color.OrangeRed, 15);
+            _warnNotice = new NoticeForm(
+                $"今天还能用 {min} 分钟，时间到会自动注销。\r\n" +
+                $"{min} minutes left before logging out.",
+                Color.OrangeRed, 15, width: 400, height: 140, opacity: 0.5);
             _warnNotice.Show();
         }
 
